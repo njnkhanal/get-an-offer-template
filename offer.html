@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup with Celebration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+        html,
+        body {
+            font-family: "Nunito", sans-serif;
+        }
+
+        .sn-popup {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            animation: fadein 0.5s;
+        }
+
+        .sn-popup-content {
+            background-color: white;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            position: relative;
+            text-align: center;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            padding-top: 30px;
+            border: double 4px #ca4646;
+        }
+
+        .sn-popup-content::before {
+            animation: moveShapes 10s linear infinite;
+            content: '\f06b';
+            font-family: 'FontAwesome';
+            position: absolute;
+            z-index: 5;
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 141, 0, 0.86);
+            border-radius: 50%;
+            top: -33px;
+            left: -21px;
+            text-align: center;
+            line-height: 80px;
+            box-sizing: border-box;
+            color: white;
+            font-size: 30px;
+            box-shadow: 0 0 13px #ff8d00;
+            text-shadow: 5px 5px 10px #f5683085;
+        }
+
+        @keyframes moveShapes {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+
+            50% {
+                transform: translateY(10px) translateX(10px);
+            }
+
+            100% {
+                transform: translateY(0) translateX(0);
+            }
+        }
+
+        .sn-close {
+            color: white;
+            float: right;
+            font-size: 20px;
+            font-weight: bold;
+            position: absolute;
+            top: -13px;
+            right: -13px;
+            cursor: pointer;
+            background: black;
+            height: 25px;
+            width: 25px;
+            border-radius: 50%;
+            border: solid 2px #ff8d00;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sn-close:hover,
+        .sn-close:focus {
+            color: #ff8d00;
+            text-decoration: none;
+            cursor: pointer;
+            border-color: #ff8d00;
+        }
+
+        @keyframes fadein {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .sn-popup-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .sn-popup-offer {
+            padding: 10px 20px;
+            color: #ff8d00;
+            border-radius: 30px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 28px;
+            background-color: #ff8d004a;
+            box-shadow: 4px 5px 10px #ff8d00a3;
+            position: relative;
+            z-index: 1;
+        }
+
+        .sn-popup-content h4 {
+            font-size: 20px;
+        }
+
+        .sn-popup-content p {
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .sn-popup-content small {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .sn-popup-content small a {
+            color: #ff8d00;
+            text-decoration: underline;
+        }
+
+        .sn-btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 12px 24px;
+            background-color: #ff8d00;
+            border-radius: 30px;
+            color: white;
+            font-size: 16px;
+            margin: 10px 0;
+            transition: background-color 0.3s;
+            box-shadow: 4px 5px 10px #ff8c0046;
+        }
+
+        .sn-btn:hover {
+            background-color: #ff9f33;
+            color: white;
+        }
+
+        .sn-limited-time-offer {
+            position: absolute;
+            top: -21px;
+            left: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        .sn-limited-time-offer .sn-limited-text {
+            font-size: 15px;
+            color: #ca4646;
+            font-weight: 600;
+            margin-top: 5px;
+            background-color: #fcce94;
+            display: inline-block;
+            padding: 5px 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .sn-limited-time-offer .sn-limited-text::before,
+        .sn-limited-time-offer .sn-limited-text::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 10px 0;
+            border-style: solid;
+            border-color: transparent;
+        }
+
+        .sn-limited-time-offer .sn-limited-text::before {
+            left: -20px;
+            border-right-width: 20px;
+            border-right-color: #ca4646;
+        }
+
+        .sn-limited-time-offer .sn-limited-text::after {
+            right: -20px;
+            border-left-width: 20px;
+            border-left-color: #ca4646;
+        }
+
+        canvas {
+            z-index: 999999 !important;
+        }
+    </style>
+
+<body>
+    <div id="sn-popup" class="sn-popup">
+        <div class="sn-popup-content">
+            <div class="sn-limited-time-offer">
+                <span class="sn-limited-text">
+                    Limited time offer.
+                </span>
+            </div>
+            <div class="sn-popup-header">
+                <div class="sn-popup-offer">GET AN OFFER!</div>
+                <span class="sn-close">&times;</span>
+            </div>
+            <h4>Three months free trial.</h4>
+            <a href="#" class="sn-btn">Request a trial</a>
+            <p>Additional one month free trial for a successful referral.</p>
+            <a href="#" class="sn-btn">Get a free referal code</a>
+            <small><a href="https://infrabyte.com.au/offer-terms-conditions/">Terms and conditions</a> will
+                apply</small>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let animationEnd, confettiCanvas;
+
+            function launchConfetti() {
+                var count = 200;
+                var defaults = {
+                    origin: { y: 0.7 }
+                };
+
+                function fire(particleRatio, opts) {
+                    confetti({
+                        ...defaults,
+                        ...opts,
+                        particleCount: Math.floor(count * particleRatio)
+                    });
+                }
+
+                fire(0.25, {
+                    spread: 26,
+                    startVelocity: 55,
+                });
+
+                fire(0.2, {
+                    spread: 60,
+                });
+
+                fire(0.35, {
+                    spread: 100,
+                    decay: 0.91,
+                    scalar: 0.8
+                });
+
+                fire(0.1, {
+                    spread: 120,
+                    startVelocity: 25,
+                    decay: 0.92,
+                    scalar: 1.2
+                });
+
+                fire(0.1, {
+                    spread: 120,
+                    startVelocity: 45,
+                });
+
+                var duration = 25 * 1000;
+                animationEnd = Date.now() + duration;
+                var skew = 1;
+
+                function randomInRange(min, max) {
+                    return Math.random() * (max - min) + min;
+                }
+
+                (function frame() {
+                    var timeLeft = animationEnd - Date.now();
+                    var ticks = Math.max(200, 500 * (timeLeft / duration));
+                    skew = Math.max(0.8, skew - 0.001);
+                    confetti({
+                        particleCount: 1,
+                        startVelocity: 0,
+                        ticks: ticks,
+                        origin: {
+                            x: Math.random(),
+                            y: (Math.random() * skew) - 0.2
+                        },
+                        colors: ['#ff8d00'],
+                        shapes: ['circle'],
+                        gravity: randomInRange(0.4, 0.6),
+                        scalar: randomInRange(0.4, 1),
+                        drift: randomInRange(-0.4, 0.4)
+                    });
+
+                    if (timeLeft > 0) {
+                        requestAnimationFrame(frame);
+                    }
+                }());
+            }
+
+            $("#sn-popup").css("display", "flex");
+            $(".sn-close").click(function () {
+                // Stop confetti
+                animationEnd = Date.now();
+
+                // Hide the confetti canvas
+                confettiCanvas = document.querySelector('canvas');
+                if (confettiCanvas) {
+                    confettiCanvas.style.display = 'none';
+                }
+
+                $("#sn-popup").fadeOut();
+            });
+
+            launchConfetti();
+        });
+    </script>
+
+</body>
+
+</html>
